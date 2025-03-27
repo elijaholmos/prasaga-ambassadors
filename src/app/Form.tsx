@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useState } from 'react';
 
 const formSchema = z.object({
 	firstName: z.string().nonempty({ message: 'First name is required.' }),
@@ -18,6 +19,8 @@ const formSchema = z.object({
 });
 
 export function ProfileForm() {
+	const [loading, setLoading] = useState(false);
+
 	// 1. Define your form.
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -31,17 +34,26 @@ export function ProfileForm() {
 	});
 
 	// 2. Define a submit handler.
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		console.log(values);
-		emailjs.init({
-			publicKey: process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY,
-			limitRate: {
-				id: "vercel",
-				throttle: 5000,
-			},
-		});
+	async function onSubmit(values: z.infer<typeof formSchema>) {
+		try {
+			setLoading(true);
+			console.log(values);
+			emailjs.init({
+				publicKey: process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY,
+				limitRate: {
+					id: "vercel",
+					throttle: 5000,
+				},
+			});
 
-		emailjs.send("service_h6lo7jb", "template_voccwdi", values);
+			await emailjs.send("service_h6lo7jb", "template_voccwdi", values);
+			alert('Form submitted successfully!');
+		} catch (err) {
+			console.error(err);
+			alert('There was an error submitting the form.');
+		} finally {
+			setLoading(false);
+		}
 	}
 
 
@@ -139,7 +151,7 @@ export function ProfileForm() {
 							</FormItem>
 						)}
 					/>
-					<Button type="submit" className="w-full bg-[#A646A1] text-white hover:bg-purple-700">
+					<Button type="submit" className="w-full bg-[#A646A1] text-white hover:bg-purple-700" disabled={loading}>
 						Submit
 					</Button>
 				</form>
