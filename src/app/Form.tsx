@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -33,13 +34,27 @@ export function ProfileForm() {
 		// Do something with the form values.
 		// ✅ This will be type-safe and validated.
 		console.log(values);
+		fetch('/api/form/', {
+			method: 'POST',
+			body: JSON.stringify(values),
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
 	}
 
 	return (
-		<div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 px-4">
+		<div className="flex min-h-screen flex-col items-center justify-center bg-[#FDFDFD] px-4">
 			<div className="mb-8 text-center">
+				<Image
+					src="/PrasagaLogoFull.svg"
+					alt="PraSaga Logo"
+					className="mx-auto mb-4 h-32 w-auto"
+					width={64}
+					height={64}
+				/>
 				<h1 className="text-3xl font-bold text-[#A646A1]">PraSaga Ambassadors Form</h1>
-				<p className="mt-2 text-gray-600">
+				<p className="mt-2 text-black">
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit. PraSaga is looking for passionate
 					ambassadors to join our mission.
 				</p>
@@ -54,11 +69,11 @@ export function ProfileForm() {
 						name="firstName"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>First Name</FormLabel>
+								<FormLabel className="text-[#A646A1]">First Name</FormLabel>
 								<FormControl>
-									<Input placeholder="John" {...field} />
+									<Input placeholder="John" className="text-black" {...field} />
 								</FormControl>
-								<FormMessage />
+								<FormMessage className="text-black" />
 							</FormItem>
 						)}
 					/>
@@ -67,11 +82,11 @@ export function ProfileForm() {
 						name="lastName"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Last Name</FormLabel>
+								<FormLabel className="text-[#A646A1]">Last Name</FormLabel>
 								<FormControl>
-									<Input placeholder="Doe" {...field} />
+									<Input placeholder="Doe" className="text-black" {...field} />
 								</FormControl>
-								<FormMessage />
+								<FormMessage className="text-black" />
 							</FormItem>
 						)}
 					/>
@@ -80,11 +95,11 @@ export function ProfileForm() {
 						name="email"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Email</FormLabel>
+								<FormLabel className="text-[#A646A1]">Email</FormLabel>
 								<FormControl>
-									<Input placeholder="john.doe@example.com" {...field} />
+									<Input placeholder="john.doe@example.com" className="text-black" {...field} />
 								</FormControl>
-								<FormMessage />
+								<FormMessage className="text-black" />
 							</FormItem>
 						)}
 					/>
@@ -93,15 +108,15 @@ export function ProfileForm() {
 						name="skills"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Skills</FormLabel>
+								<FormLabel className="text-[#A646A1]">Skills</FormLabel>
 								<FormControl>
 									<textarea
 										placeholder="List your skills here..."
-										className="w-full rounded-md border px-3 py-2"
+										className="w-full rounded-md border px-3 py-2 text-black bg-white"
 										{...field}
 									/>
 								</FormControl>
-								<FormMessage />
+								<FormMessage className="text-black" />
 							</FormItem>
 						)}
 					/>
@@ -110,15 +125,15 @@ export function ProfileForm() {
 						name="experience"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Experience</FormLabel>
+								<FormLabel className="text-[#A646A1]">Experience</FormLabel>
 								<FormControl>
 									<textarea
 										placeholder="Describe your experience here..."
-										className="w-full rounded-md border px-3 py-2"
+										className="w-full rounded-md border px-3 py-2 text-black bg-white"
 										{...field}
 									/>
 								</FormControl>
-								<FormMessage />
+								<FormMessage className="text-black" />
 							</FormItem>
 						)}
 					/>
